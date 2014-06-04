@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" >
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/03/xml.xsd" />
+
+  <xs:simpleType name="ram_size_t">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="iteration_t">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="signed_type_t">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="unsigned" />
+      <xs:enumeration value="signed" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="bit_size_t">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="1" />
+      <xs:maxInclusive value="32" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="version_t">
+    <xs:restriction base="xs:decimal">
+      <xs:fractionDigits value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="reference_t">
+    <xs:attribute name="reference_id" type="xs:IDREF"/>
+    <xs:attribute name="alt_name" type="xs:string"/>
+    <xs:attribute name="substitute_for_attr" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="explicit_value_t">
+    <xs:choice>
+      <xs:element name="integer" type="xs:integer" />
+      <xs:element name="string" type="xs:string" />
+      <xs:element name="reference" type="reference_t" />
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="register_t">
+    <xs:sequence>
+      <xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="label" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <xs:choice>
+        <xs:element name="constantValue" type="explicit_value_t" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="defaultValue" type="explicit_value_t" minOccurs="0" maxOccurs="1"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="size" type="bit_size_t" use="required"/>
+    <xs:attribute name="min" type="xs:integer" />
+    <xs:attribute name="max" type="xs:integer" />
+    <xs:attribute name="signedType" type="signed_type_t" />
+    <xs:attribute name="readonly" type="xs:boolean" />
+  </xs:complexType>
+
+  <xs:complexType name="padding_t">
+    <xs:sequence>
+      <xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="label" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" />
+    <xs:attribute name="size" type="bit_size_t" />	
+  </xs:complexType>
+
+  <xs:simpleType name='processing_hint_t'>
+    <xs:restriction base='xs:string'>
+      <xs:enumeration value='vhdl_package'/>
+      <xs:enumeration value='no_hint'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='type_t'>
+    <xs:restriction base='xs:string'>
+      <xs:enumeration value='control'/>
+      <xs:enumeration value='status'/>
+    </xs:restriction>
+  </xs:simpleType>
+
+
+  <xs:complexType name="region_t" abstract="true">
+    <xs:sequence>
+      <xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="label" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="type" type="type_t"  />
+    <xs:attribute name="version" type="version_t" />
+    <xs:attribute name="device_type" type="xs:string" />
+    <xs:attribute name="descriptor_id" type="xs:integer" />
+    <xs:attribute name="iteration" type="iteration_t" />
+    <xs:attribute name="processing_hint" type="processing_hint_t"  />
+    <xs:attribute ref="xml:base"/>
+  </xs:complexType>
+
+  <xs:complexType name="status_t">
+	<xs:complexContent>
+	  <xs:extension base="region_t">
+		<xs:choice maxOccurs="unbounded">
+		  <xs:element name="status-area" type="status_t" minOccurs="0" maxOccurs="unbounded" />
+                  <xs:element name="register" type="register_t" minOccurs="0" maxOccurs="unbounded" />
+                  <xs:element name="padding" type="padding_t" minOccurs="0" maxOccurs="unbounded" />
+		</xs:choice>
+	  </xs:extension>
+	</xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="control_t">
+	<xs:complexContent>
+	  <xs:extension base="region_t">
+		<xs:choice maxOccurs="unbounded">
+		  <xs:element name="control-area" type="control_t" minOccurs="0" maxOccurs="unbounded" />
+                  <xs:element name="register" type="register_t" minOccurs="0" maxOccurs="unbounded" />
+                  <xs:element name="padding" type="padding_t" minOccurs="0" maxOccurs="unbounded" />
+		</xs:choice>
+	  </xs:extension>
+	</xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ram_t">
+    <xs:sequence>
+      <xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="label" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="ram" type="ram_t" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="size" type="ram_size_t"  use="required"/>
+    <xs:attribute name="version" type="version_t" />
+    <xs:attribute name="device_type" type="xs:string" />
+    <xs:attribute name="descriptor_id" type="xs:integer" />
+    <xs:attribute name="iteration" type="iteration_t" />
+    <xs:attribute name="processing_hint" type="processing_hint_t"  />
+    <xs:attribute ref="xml:base"/>
+  </xs:complexType>
+
+  <xs:complexType name="component_t">
+    <xs:sequence>
+      <xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="label" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <xs:choice maxOccurs="unbounded">
+        <xs:element name="ram" type="ram_t" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="status-area" type="status_t" minOccurs="0" maxOccurs="unbounded" />
+	<xs:element name="control-area" type="control_t" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="component" type="component_t" minOccurs="0" maxOccurs="unbounded" />
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" />
+    <xs:attribute name="iteration" type="iteration_t" />
+    <xs:attribute ref="xml:base"/>
+  </xs:complexType>
+
+<!--  <xs:element name="region" type="region_t" /> -->
+
+  <xs:element name="component" type="component_t" />
+  <xs:element name="status-area" type="status_t" />
+  <xs:element name="control-area" type="control_t" />
+  <xs:element name="ram" type="ram_t" />
+<!--  <xs:element name="constant_declaration" type="constant_declaration_t" substitutionGroup="base" /> -->
+</xs:schema>

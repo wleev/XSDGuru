@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:complexType name="cType">
+	<xs:complexContent>
+	  <xs:extension base="resType">
+		<xs:sequence>
+		  <xs:element name="testEL" type="xs:integer" />
+	    </xs:sequence>
+		<xs:attribute name="testAttr" type="xs:string" />
+	  </xs:extension>
+	</xs:complexContent>
+  </xs:complexType>
+
+ <xs:complexType name="resType">
+	<xs:complexContent>
+	  <xs:extension base="nestresType">
+		<xs:choice>
+		  <xs:element name="choice1" type="xs:string" />
+		  <xs:element name="choice2" type="xs:string" />
+		</xs:choice>
+	  </xs:extension>
+	</xs:complexContent>
+  </xs:complexType>
+
+ <xs:complexType name="nestresType">
+   <xs:sequence>
+	 <xs:element name="default" type="min5String" />
+   </xs:sequence>
+  </xs:complexType>
+
+<xs:simpleType name="min5String">
+  <xs:restriction base="xs:string">
+	<xs:minLength value="5" />
+  </xs:restriction>
+</xs:simpleType>
+
+  <xs:complexType name="region_t">
+    <xs:sequence>
+	  <xs:element name="cElement" type="cType" minOccurs="0" maxOccurs="3" />
+	  <xs:element name="resElement" type="resType" minOccurs="0" maxOccurs="2" />
+	  <xs:element name="nestresElement" type="nestresType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="component_t">
+    <xs:sequence>
+      <xs:element name="region" type="region_t" />
+    </xs:sequence>
+  </xs:complexType>
+
+<xs:element name="region" type="region_t" />
+<xs:element name="component" type="component_t" />
+</xs:schema>
+
+
+
+
+

@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" merge="true" iteration="1" xmlns:xi="http://www.w3.org/2003/XInclude" name="includetest">
+ <status-area name="statarea"/>
+ <status-area name=""/>
+ <ram size="1" name=""/>
+ <status-area name="statarea"/>
+ <component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" merge="true" iteration="5" xmlns:xi="http://www.w3.org/2003/XInclude" name="">
+  <xi:include href="../toInclude1.ssl"/>
+  <control-area name="">
+   <register size="1" type="int32_t" name=""/>
+  </control-area>
+  <xi:include href="../toInclude1.ssl"/>
+  <xi:include href="../toInclude1.ssl"/>
+  <xi:include href="../toInclude1.ssl"/>
+  <xi:include href="supersimple.ssl"/>
+  <status-area name="statarea"/>
+ </component>
+ <control-area name=""/>
+ <xi:include href="../toInclude1.ssl"/>
+ <xi:include href="../toInclude1.ssl"/>
+ <xi:include href="../toInclude1.ssl"/>
+ <xi:include href="supersimple.ssl"/>
+ <status-area name="statarea"/>
+</component>

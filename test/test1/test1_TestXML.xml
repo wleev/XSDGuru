@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name='system'>
+   <control-area name='test'>
+      <register name='Commit' size='1'/>
+      <register name='Default' size='1'/>
+   </control-area>
+   <component name='OPMT_pipeline' iteration='2'>
+      <component name='FunctionLaserSystem'>
+         <control-area name='FMD_SignalAcquisitioning'>
+            <register name='Commit' size='1'/>
+            <register name='Default' size='1'/>
+            <control-area name='Channel'>
+               <control-area name='SubChannel' iteration='2'>
+                  <register name='SubEnable' size='1'/>
+                  <register name='SubMode' size='6'/>
+               </control-area>
+               <register name='Enable' size='1'/>
+               <register name='ModeA' size='5'/>
+               <register name='ModeB' size='32'/>
+               <register name='ModeC' size='16'/>
+            </control-area>
+         </control-area>
+         <control-area name='FMD_SignalProcessing'>
+            <control-area name='Threshold'>
+            </control-area>
+            <control-area name='Filters'>
+            </control-area>
+         </control-area>
+         <status-area name='FMD_Status'>
+         </status-area>
+         <ram name='SomeLUT' size='128' iteration='2'>
+         </ram>
+         <ram name='AnotherLUT' size='1024'>
+         </ram>
+      </component>
+      <component name='FunctionFilterStage' iteration='4'>
+         <control-area name='FMD_FilterSetting'>
+         </control-area>
+         <status-area name='FMD_Status'>
+         </status-area>
+      </component>
+   </component>
+</component>
+

@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<component xmlns:xi="http://www.w3.org/2003/XInclude" name="sslsimple">
+ <control-area name="testcontrolarea"/>
+ <status-area name="teststatus"/>
+ <control-area name="testcontrolarea"/>
+</component>

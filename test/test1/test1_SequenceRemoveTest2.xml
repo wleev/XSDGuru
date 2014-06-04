@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:complexType name="region_t">
+    <xs:sequence maxOccurs="unbounded" >
+	  <xs:element name="aaa" type="xs:string" minOccurs="1" />
+	  <xs:element name="bbb" type="xs:string" />
+	  <xs:element name="ccc" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="component_t">
+    <xs:sequence>
+      <xs:element name="region" type="region_t" />
+    </xs:sequence>
+  </xs:complexType>
+
+<xs:element name="region" type="region_t" />
+<xs:element name="component" type="component_t" />
+</xs:schema>
+

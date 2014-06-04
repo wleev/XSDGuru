@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+     Stylesheet for SSL Editor
+
+     attribute property can be: false(default) or true
+     attribute widget   can be: label(default), text_edit or line_edit
+-->
+
+<stylesheet>
+  <component     color="#3399FF"                 widget="node_label" />
+  <control-area  color="#FF9933"                 widget="node_label" />
+  <status-area   color="#99CC66"                 widget="node_label" />
+  <ram           color="#9966CC"                 widget="node_label" />
+  <description                   property="true" widget="text_edit"  />
+  <label                         property="true" widget="line_edit"  />
+  <padding       color="#FF3300"                 widget="node_label" />
+  <register      color="#FFFF00"                 widget="node_label" />
+
+  <constantValue color="#FF3300"                 widget="node_label" />
+  <defaultValue  color="#FF3300"                 widget="node_label" />
+  <integer       color="#FF3300"                 widget="spin_box"   />
+  <string        color="#FF3300"                 widget="line_edit"  />
+
+</stylesheet>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+ 
+<xs:element name="region">
+  <xs:complexType >
+	<xs:choice maxOccurs="unbounded">
+ 	  <xs:element name="test" type="xs:string" minOccurs="0" />
+	</xs:choice>
+	<xs:attribute name="version" type="xs:decimal" />
+	<xs:attribute name="device_type" type="xs:string" />
+	<xs:attribute name="descriptor_id" type="xs:integer" />
+  </xs:complexType>
+</xs:element>
+
+</xs:schema>
+
